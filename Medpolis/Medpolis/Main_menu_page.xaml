@@ -1,0 +1,106 @@
+﻿<Page x:Class="Medpolis.Main_menu_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Medpolis"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1920"
+      Title="Main_menu_page">
+
+    <Grid>
+        <TabControl x:Name="tab_menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="1">
+            <TabItem x:Name="title" Cursor="Arrow" Width="400" Height="55" IsEnabled="False">
+                <TabItem.Header>
+                    <Image Source="Medpolis.png" />
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="home_tab" Header="Home" Cursor="Arrow" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF07676" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="home_tab_menu">
+                    <Grid.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="login_background.jpg"/>
+                    </Grid.Background>
+                    <ScrollViewer HorizontalAlignment="Left" Height="927" Margin="50,10,0,0" VerticalAlignment="Top" Width="1483" VerticalScrollBarVisibility="Hidden">
+                        <StackPanel Height="1800" Width="1473">
+                            <Label Content="  Despre MEDPOLIS" FontSize="96" Foreground="#FF7F0000"/>
+                            <Label Content="         Medpolis - o alternativă medicală modernă" FontSize="36" Foreground="#FF7F0000" Height="80" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="1463"/>
+                            <Label Content="Începând cu anul 2004 Medpolis oferă pacienților o alternativă medicală modernă, comfort, siguranță si precizie.&#xA;Misiunea noastră este de a informa si educa pacienții si de a le oferi planuri de tratament eficiente si precise &#xA;pentru afecțiunile de care aceștia suferă.&#xA;Sistemul de asistentă medicală de la clinica Medpolis este bazat pe conceptul preventiv contemporan:&#xA;  - minimizarea riscului de îmbolnăvire a pacientului sănătos;&#xA;  - implementarea tratamentului corect si evitarea complicațiilor in cazul pacienților cu &#xA;    afecțiuni constituite.&#xA;&#xA;Cabinetele folosesc o bază de date informatizată in care se stochează informația actului medical pentru fiecare &#xA;pacient in parte, astfel încât există posibilitatea urmăririi in timp a acestuia si aprecierea evoluției diferitelor &#xA;afecțiuni." Height="374" Margin="140,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                            <Label Content="&#xA;         Aparatură si dotări moderne" FontSize="36" Foreground="#FF7F0000" Height="96" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="1463"/>
+                            <Label Content="Toate cabinetele sunt dotate cu aparatură performantă care permite evaluarea completă a pacienților in vederea &#xA;stabilirii rapide si precise a diagnosticului. Echipa noastră de medici specialisti este alături de pacient de la bun &#xA;început pentru stabilirea unui plan terapeutic perfect adaptat fiecărui caz. &#xA;&#xA;La clinica Medpolis veți fi întâmpinat de un personal profesionist si prietenos, permanent dedicat &#xA;comfortului dumneavoastră. Totul este organizat in așa fel încât să se evite timpii inutili de așteptare și pentru a &#xA;asigura o experiență medicală completă si plăcută la un nou nivel de eficiență." Height="270" Margin="140,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                            <Label Content="&#xD;&#xA;         Păreri Clienți" FontSize="36" Foreground="#FF7F0000" Height="110" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="1463"/>
+                            <Label Content="&#xD;&#xA;&#8226; Tănase Alina, 38 de ani: &#xA;&#x9;Calitatea serviciilor si amplasarea geografică sunt elementele care m-au determinat sa aleg Medpolis. &#xD;&#xA;&#x9;În primul rând, apreciez interesul pe care il arătați față de pacienți. Cred că cele mai importante calități &#xD;&#xA;&#x9;ale voastre sunt medicii profesioniști, serviciile de calitate, personalul amabil. Apreciez aparatura de &#xD;&#xA;&#x9;calitate folosită, respectul față de pacienți. Recomand tuturor sa vină sa apeleze la serviciile Medpolis &#xD;&#xA;&#x9;și nu vor fi dezamăgiți." Height="248" Margin="96,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                            <Label Content="&#xA;&#8226; Țucan Marius, 46 de ani: &#xA;&#x9;Mai mult decât profesioniști: Specialiști. Recomand cu încredere. Prețuri decente." Height="130" Margin="96,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                            <Label Content="&#xA;&#8226; Clipei Valentina, 29 de ani: &#xA;&#x9;Serviciile sunt de 10 stelute :) Vă recomand cu încredere Medpolis! Sunt rapizi, eficienti iar rezultatul este &#xD;&#xA;&#x9;wow! Plan de lucru bine pus la punct pentru fiecare pacient în parte, transparenta si comunicare eficientă &#xD;&#xA;&#x9;între doctori. Foarte amabili, explică fiecare pas care urmează si nu doare deloc ;) Mulțumesc frumos! " Height="196" Margin="96,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                            <Label Content="&#xA;&#8226; Chiriac Maria, 52 de ani: &#xA;&#x9;Sunt mai mult decât fericită că, dintr-o întâmplare, am ajuns la această clinică, unde, chiar dacă eşti un om &#xD;&#xA;&#x9;simplu, eşti tratat cu considerație şi profesionalism! Sunt impresionată de dedicația cadrelor medicale de aici! " Height="238" Margin="96,0,10,0" FontSize="28" RenderTransformOrigin="0.5,0.5"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <Label Content="Date de Contact:" FontSize="34" Foreground="#FF7F0000" Height="98" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="366" HorizontalContentAlignment="Center" Margin="1543,49,0,790"/>
+                    <Label Content="B-dul. Basarabia, nr. 68, &#xD;&#xA;sector 2, București" FontSize="26" Foreground="#FF440000" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="316" FontStyle="Italic" Margin="1588,152,0,715"/>
+                    <Image x:Name="address_icon" HorizontalAlignment="Left" Height="70" Margin="1543,152,0,0" VerticalAlignment="Top" Width="41" Source="address_icon.png"/>
+                    <Label Content="Luni - Vineri:  8:00 - 20:00" FontSize="26" Foreground="#FF440000" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="316" FontStyle="Italic" Margin="1588,245,0,642"/>
+                    <Image x:Name="clock_icon" HorizontalAlignment="Left" Height="50" Margin="1543,245,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.386,0.981" Source="clock_icon.png"/>
+                    <Label Content=" 0799 022 317" FontSize="26" Foreground="#FF440000" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="311" FontStyle="Italic" Margin="1593,315,0,572"/>
+                    <Image x:Name="phone_icon" HorizontalAlignment="Left" Height="50" Margin="1543,315,0,0" VerticalAlignment="Top" Width="45" Source="phone_icon.png" RenderTransformOrigin="0.386,0.981"/>
+                    <Label Content=" medpolis@gmail.com" FontSize="26" Foreground="#FF440000" HorizontalAlignment="Left" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="301" FontStyle="Italic" Margin="1603,386,0,501"/>
+                    <Image x:Name="email_icon" HorizontalAlignment="Left" Height="50" Margin="1538,386,0,0" VerticalAlignment="Top" Width="60" Source="email_icon.png" RenderTransformOrigin="0.386,0.981"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="specialitati_tab" Header="Specialitati" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF07676" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="specialitati_tab_menu" Background="#0000FF">
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="preturi_tab" Header="Preturi" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF07676" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="preturi_tab_menu" Background="#ff0000">
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="programari_tab" Header="Stabilire Programare" ScrollViewer.CanContentScroll="True" Width="250" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF07676" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="programari_tab_menu" Background="#00FF00">
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="cont_tab" ScrollViewer.CanContentScroll="True" Width="800" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" Width="770">
+                        <Image Source="cont.png" HorizontalAlignment="Left" />
+                        <Label x:Name="cont_label" Content="Contul meu:  " Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="719" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFF07676" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid x:Name="cont_tab_menu" Background="#FF5B1AA8">
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

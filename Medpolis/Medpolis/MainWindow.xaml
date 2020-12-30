@@ -1,0 +1,12 @@
+﻿<Window x:Name="Medpolis" x:Class="Medpolis.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Medpolis"
+        mc:Ignorable="d"
+        Title="Medpolis" Height="1000" Width="1920" Icon="Medpolis_small.png" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="ThreeDBorderWindow" Loaded="Medpolis_Loaded">
+    <Grid>
+        <Frame x:Name="page_frame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

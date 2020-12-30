@@ -1,0 +1,72 @@
+﻿<Page x:Name="login_page" x:Class="Medpolis.Login_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Medpolis"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1920"
+      Title="Login_page">
+    <Page.Resources>
+        <ControlTemplate TargetType="PasswordBox" x:Key="roundedpasswordbox">
+            <Border Background="{TemplateBinding Background}" BorderBrush="#FFFF7171" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="20">
+                <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+            </Border>
+        </ControlTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush  Stretch="UniformToFill" ImageSource="login_background.jpg"/>
+        </Grid.Background>
+        <Image HorizontalAlignment="Left" Height="250" Margin="310,80,0,0" VerticalAlignment="Top" Width="1300" Source="Medpolis.png"/>
+        <Button x:Name="login" Content="Autentificare" Margin="810,620,810,0" VerticalAlignment="Top" Width="300" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" Click="login_Click" AutomationProperties.Name="login" HorizontalAlignment="Center" Foreground="#FF7F0000">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                    <GradientStop Color="#FFEA2F2F"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="new_user" Content="Creare cont nou" Margin="810,720,0,0" VerticalAlignment="Top" Width="300" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="new_user" Click="new_user_Click" HorizontalAlignment="Left" Foreground="#FF7F0000">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                    <GradientStop Color="#FFEA2F2F"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <TextBox x:Name="email_box" HorizontalAlignment="Left" Height="40" Margin="760,430,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" VerticalContentAlignment="Center" FontSize="24" FontFamily="Gill Sans MT" Padding="15,0,0,0" VerticalScrollBarVisibility="Disabled" BorderBrush="#FFFF7171" Foreground="#FF7F0000">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </TextBox.Resources>
+            <TextBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0.352"/>
+                    <GradientStop Color="#FFBB8181" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBox.Background>
+        </TextBox>
+        <PasswordBox x:Name="password_box" Template="{StaticResource roundedpasswordbox}" HorizontalAlignment="Left" Margin="760,500,0,0" VerticalAlignment="Top" Width="400" Height="40" VerticalContentAlignment="Center" FontSize="24" FontFamily="Gill Sans MT" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="15,0,0,0" BorderBrush="#FFFF7171" Foreground="#FF7F0000">
+            <PasswordBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0.352"/>
+                    <GradientStop Color="#FFBB8181" Offset="1"/>
+                </LinearGradientBrush>
+            </PasswordBox.Background>
+        </PasswordBox>
+        <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="608,430,0,0" Height="40" Width="140" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
+        <Label Content="Parolă:" HorizontalAlignment="Left" Margin="608,500,0,0" VerticalAlignment="Top" Width="140" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
+    </Grid>
+</Page>
