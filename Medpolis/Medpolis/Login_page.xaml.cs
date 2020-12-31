@@ -44,18 +44,25 @@ namespace Medpolis
             {
                 if (IsPassword(password_box.Password))
                 {
-                    // fac verificare daca exista adresa de email in baza de date
-                    // daca exista, verific daca e corecta parola
-                    // apoi fac ce scrie mai jos
-                    var main_menu = new Main_menu_page();
-                    main_menu.cont_label.Content += email_box.Text;
-                    NavigationService.Navigate(main_menu);
+                    using (var context = new Clinica_MedpolisEntities())
+                    {
+                        var user = (((from c in context.Client where c.Email.Equals(email_box.Text) select c).Take(1))).ToList();
+                        if (user.Count() > 0)
+                        {
+                            if (password_box.Password.Equals(user[0].Parola))
+                            {
+                                var main_menu = new Main_menu_page();
+                                main_menu.cont_label.Content += email_box.Text;
+                                NavigationService.Navigate(main_menu);
+                            }
+                            else MessageBox.Show("Parola gresita!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                        }
+                        else MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" nu există!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                    }
                 }
-                else
-                    MessageBox.Show("Introduceți o parolă validă (între 8 si 32 de caractere)!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                else MessageBox.Show("Introduceți o parolă validă (între 8 si 32 de caractere)!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
-            else
-                MessageBox.Show("Introduceți o adresă de email validă!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            else MessageBox.Show("Introduceți o adresă de email validă!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
 
         private void new_user_Click(object sender, RoutedEventArgs e)

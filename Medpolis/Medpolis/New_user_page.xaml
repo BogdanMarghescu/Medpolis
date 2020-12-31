@@ -19,10 +19,10 @@
             <ImageBrush  Stretch="UniformToFill" ImageSource="login_background.jpg"/>
         </Grid.Background>
 
-        <Label Content="Introduceti datele noului cont Medpolis:" HorizontalAlignment="Left" Margin="310,330,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Gill Sans MT" FontSize="34" FontWeight="Bold" Foreground="#FF7F0000"/>
+        <Label Content="Introduceți datele noului cont Medpolis:" HorizontalAlignment="Left" Margin="310,330,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Gill Sans MT" FontSize="34" FontWeight="Bold" Foreground="#FF7F0000"/>
 
         <Image HorizontalAlignment="Left" Height="250" Margin="310,80,0,0" VerticalAlignment="Top" Width="1300" Source="Medpolis.png"/>
-        <Button x:Name="new_user" Content="Creare cont nou" Margin="806,850,0,0" VerticalAlignment="Top" Width="300" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="new_user" Click="new_user_Click" HorizontalAlignment="Left" Foreground="#FF7F0000">
+        <Button x:Name="new_user" Content="Creare cont nou" Margin="630,850,0,0" VerticalAlignment="Top" Width="300" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="new_user" Click="new_user_Click" HorizontalAlignment="Left" Foreground="#FF7F0000">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="20"/>
@@ -81,7 +81,7 @@
             </TextBox.Background>
         </TextBox>
 
-        <Label Content="Numar Telefon:" HorizontalAlignment="Left" Margin="518,610,0,0" VerticalAlignment="Top" Width="182" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
+        <Label Content="Număr Telefon:" HorizontalAlignment="Left" Margin="518,610,0,0" VerticalAlignment="Top" Width="182" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
         <TextBox x:Name="phone_box" HorizontalAlignment="Left" Height="40" Margin="710,610,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500" VerticalContentAlignment="Center" FontSize="24" FontFamily="Gill Sans MT" Padding="15,0,0,0" VerticalScrollBarVisibility="Disabled" BorderBrush="#FFFF7171" Foreground="#FF7F0000">
             <TextBox.Resources>
                 <Style TargetType="Border">
@@ -120,6 +120,19 @@
                 </LinearGradientBrush>
             </PasswordBox.Background>
         </PasswordBox>
-        
+        <Button x:Name="back" Content="Înapoi" Margin="971,850,0,0" VerticalAlignment="Top" Width="300" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="new_user" HorizontalAlignment="Left" Foreground="#FF7F0000" Click="back_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                    <GradientStop Color="#FFEA2F2F"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
     </Grid>
 </Page>

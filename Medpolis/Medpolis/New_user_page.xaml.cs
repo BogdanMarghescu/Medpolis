@@ -50,8 +50,6 @@ namespace Medpolis
             var email_regex = new Regex("^[\\w-]{8,32}$");
             return email_regex.IsMatch(text);
         }
-
-        
         
         public New_user_page()
         {
@@ -72,11 +70,29 @@ namespace Medpolis
                             {
                                 if (IsPassword(password_box.Password))
                                 {
-                                    // fac verificare daca NU exista adresa de email in baza de date
-                                    // apoi fac ce scrie mai jos
-                                    var main_menu = new Main_menu_page();
-                                    main_menu.cont_label.Content += email_box.Text;
-                                    NavigationService.Navigate(main_menu);
+                                    using (var context = new Clinica_MedpolisEntities())
+                                    {
+                                        var user = ((from c in context.Client where c.Email.Equals(email_box.Text) select c).Take(1)).ToList();
+                                        if (user.Count() == 0)
+                                        {
+                                            var newUser = new Client()
+                                            {
+                                                Nume = surname_box.Text,
+                                                Prenume = name_box.Text,
+                                                CNP = cnp_box.Text,
+                                                Telefon = phone_box.Text,
+                                                Email = email_box.Text,
+                                                Parola = password_box.Password
+                                            };
+                                            context.Client.Add(newUser);
+                                            context.SaveChanges();
+                                            MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" a fost creat!", "Cont nou creat", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                                            var main_menu = new Main_menu_page();
+                                            main_menu.cont_label.Content += email_box.Text;
+                                            NavigationService.Navigate(main_menu);
+                                        }
+                                        else MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" este deja creat!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                                    }
                                 }
                                 else MessageBox.Show("Introduceți o parolă validă (între 8 si 32 de caractere)!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                             }
@@ -89,6 +105,11 @@ namespace Medpolis
                 else MessageBox.Show("Introduceți un prenume valid!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
             else MessageBox.Show("Introduceți un nume de familie valid!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Login_page());
         }
     }
 }
