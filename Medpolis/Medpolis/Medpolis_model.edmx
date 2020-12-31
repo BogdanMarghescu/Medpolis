@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Clinica_MedpolisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nume" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prenume" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CNP" Type="nchar" MaxLength="13" Nullable="false" />
+          <Property Name="Telefon" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Parola" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concediu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Doctor" Type="int" Nullable="false" />
+          <Property Name="Data_inceput" Type="datetime" Nullable="false" />
+          <Property Name="Data_final" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nume" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prenume" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Specialitate" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telefon" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Tura" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Programare">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Client" Type="int" Nullable="false" />
+          <Property Name="ID_Serviciu" Type="int" Nullable="false" />
+          <Property Name="ID_Doctor" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serviciu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Denumire" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pret" Type="int" Nullable="false" />
+          <Property Name="ID_Specialitate" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specialitate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Denumire" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Concediu_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Concediu" Type="Self.Concediu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Concediu">
+              <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_Specialitate">
+          <End Role="Specialitate" Type="Self.Specialitate" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialitate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="ID_Specialitate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Programare_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Programare_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Programare_Serviciu">
+          <End Role="Serviciu" Type="Self.Serviciu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serviciu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Serviciu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Serviciu_Specialitate">
+          <End Role="Specialitate" Type="Self.Specialitate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Serviciu" Type="Self.Serviciu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialitate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Serviciu">
+              <PropertyRef Name="ID_Specialitate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Clinica_MedpolisModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concediu" EntityType="Self.Concediu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Programare" EntityType="Self.Programare" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serviciu" EntityType="Self.Serviciu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specialitate" EntityType="Self.Specialitate" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Concediu_Doctor" Association="Self.FK_Concediu_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Concediu" EntitySet="Concediu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_Specialitate" Association="Self.FK_Doctor_Specialitate">
+            <End Role="Specialitate" EntitySet="Specialitate" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Programare_Client" Association="Self.FK_Programare_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Programare_Doctor" Association="Self.FK_Programare_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Programare_Serviciu" Association="Self.FK_Programare_Serviciu">
+            <End Role="Serviciu" EntitySet="Serviciu" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Serviciu_Specialitate" Association="Self.FK_Serviciu_Specialitate">
+            <End Role="Specialitate" EntitySet="Specialitate" />
+            <End Role="Serviciu" EntitySet="Serviciu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Clinica_MedpolisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CNP" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Telefon" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Parola" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Programare" Relationship="Self.FK_Programare_Client" FromRole="Client" ToRole="Programare" />
+        </EntityType>
+        <EntityType Name="Concediu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Doctor" Type="Int32" Nullable="false" />
+          <Property Name="Data_inceput" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Data_final" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_Concediu_Doctor" FromRole="Concediu" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_Specialitate" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefon" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Tura" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Concediu" Relationship="Self.FK_Concediu_Doctor" FromRole="Doctor" ToRole="Concediu" />
+          <NavigationProperty Name="Specialitate" Relationship="Self.FK_Doctor_Specialitate" FromRole="Doctor" ToRole="Specialitate" />
+          <NavigationProperty Name="Programare" Relationship="Self.FK_Programare_Doctor" FromRole="Doctor" ToRole="Programare" />
+        </EntityType>
+        <EntityType Name="Programare">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <Property Name="ID_Serviciu" Type="Int32" Nullable="false" />
+          <Property Name="ID_Doctor" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Programare_Client" FromRole="Programare" ToRole="Client" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_Programare_Doctor" FromRole="Programare" ToRole="Doctor" />
+          <NavigationProperty Name="Serviciu" Relationship="Self.FK_Programare_Serviciu" FromRole="Programare" ToRole="Serviciu" />
+        </EntityType>
+        <EntityType Name="Serviciu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Denumire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pret" Type="Int32" Nullable="false" />
+          <Property Name="ID_Specialitate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Programare" Relationship="Self.FK_Programare_Serviciu" FromRole="Serviciu" ToRole="Programare" />
+          <NavigationProperty Name="Specialitate" Relationship="Self.FK_Serviciu_Specialitate" FromRole="Serviciu" ToRole="Specialitate" />
+        </EntityType>
+        <EntityType Name="Specialitate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Denumire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_Doctor_Specialitate" FromRole="Specialitate" ToRole="Doctor" />
+          <NavigationProperty Name="Serviciu" Relationship="Self.FK_Serviciu_Specialitate" FromRole="Specialitate" ToRole="Serviciu" />
+        </EntityType>
+        <Association Name="FK_Programare_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Concediu_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Concediu" Type="Self.Concediu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Concediu">
+              <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_Specialitate">
+          <End Role="Specialitate" Type="Self.Specialitate" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialitate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="ID_Specialitate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Programare_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Programare_Serviciu">
+          <End Role="Serviciu" Type="Self.Serviciu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programare" Type="Self.Programare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serviciu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Programare">
+              <PropertyRef Name="ID_Serviciu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Serviciu_Specialitate">
+          <End Role="Specialitate" Type="Self.Specialitate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Serviciu" Type="Self.Serviciu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialitate">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Serviciu">
+              <PropertyRef Name="ID_Specialitate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Clinica_MedpolisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Concediu" EntityType="Self.Concediu" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" />
+          <EntitySet Name="Programare" EntityType="Self.Programare" />
+          <EntitySet Name="Serviciu" EntityType="Self.Serviciu" />
+          <EntitySet Name="Specialitate" EntityType="Self.Specialitate" />
+          <AssociationSet Name="FK_Programare_Client" Association="Self.FK_Programare_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Concediu_Doctor" Association="Self.FK_Concediu_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Concediu" EntitySet="Concediu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_Specialitate" Association="Self.FK_Doctor_Specialitate">
+            <End Role="Specialitate" EntitySet="Specialitate" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Programare_Doctor" Association="Self.FK_Programare_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Programare_Serviciu" Association="Self.FK_Programare_Serviciu">
+            <End Role="Serviciu" EntitySet="Serviciu" />
+            <End Role="Programare" EntitySet="Programare" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Serviciu_Specialitate" Association="Self.FK_Serviciu_Specialitate">
+            <End Role="Specialitate" EntitySet="Specialitate" />
+            <End Role="Serviciu" EntitySet="Serviciu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Clinica_MedpolisModelStoreContainer" CdmEntityContainer="Clinica_MedpolisEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="CNP" ColumnName="CNP" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concediu">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Concediu">
+              <MappingFragment StoreEntitySet="Concediu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
+                <ScalarProperty Name="Data_inceput" ColumnName="Data_inceput" />
+                <ScalarProperty Name="Data_final" ColumnName="Data_final" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctor">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="ID_Specialitate" ColumnName="ID_Specialitate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Tura" ColumnName="Tura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programare">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Programare">
+              <MappingFragment StoreEntitySet="Programare">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="ID_Serviciu" ColumnName="ID_Serviciu" />
+                <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serviciu">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Serviciu">
+              <MappingFragment StoreEntitySet="Serviciu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Denumire" ColumnName="Denumire" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+                <ScalarProperty Name="ID_Specialitate" ColumnName="ID_Specialitate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialitate">
+            <EntityTypeMapping TypeName="Clinica_MedpolisModel.Specialitate">
+              <MappingFragment StoreEntitySet="Specialitate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Denumire" ColumnName="Denumire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

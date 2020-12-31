@@ -7,6 +7,25 @@
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1920"
       Title="Main_menu_page">
+    <Page.Resources>
+        <Style x:Key="ColumnElementStylePadding" TargetType="TextBlock">
+            <Setter Property="Margin" Value="60,0,10,0" />
+        </Style>
+        <Style x:Key="ColumnElementStyleCenter" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF6B8E95" Offset="0"/>
+            <GradientStop Color="#FF14A7C1" Offset="1"/>
+            <GradientStop Color="#FF1E424E" Offset="0.509"/>
+            <GradientStop Color="#FF1D4855" Offset="0.542"/>
+            <GradientStop Color="#FF1D4855" Offset="0.542"/>
+            <GradientStop Color="#FF193A44" Offset="0.526"/>
+        </LinearGradientBrush>
+        <CollectionViewSource x:Key="specialitateViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Specialitate}, CreateList=True}"/>
+        <CollectionViewSource x:Key="specialitateServiciuViewSource" Source="{Binding Serviciu, Source={StaticResource specialitateViewSource}}"/>
+    </Page.Resources>
 
     <Grid>
         <TabControl x:Name="tab_menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="1">
@@ -69,7 +88,62 @@
                         <GradientStop Color="#FFF07676" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="preturi_tab_menu" Background="#ff0000">
+                <Grid x:Name="preturi_tab_menu" DataContext="{StaticResource specialitateViewSource}" Loaded="preturi_tab_menu_Loaded">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
+                    </Grid.Background>
+                    <ComboBox x:Name="specialitateComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="947,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" SelectionChanged="specialitateComboBox_SelectionChanged" VerticalAlignment="Top">
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Label Content="Prețuri Servicii MEDPOLIS" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="142" Width="1049" FontSize="80" FontWeight="Bold" Foreground="#FF640000" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="439,170,0,0" VerticalAlignment="Top" Height="70" Width="508" FontSize="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000"/>
+                    <DataGrid x:Name="serviciuDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource specialitateServiciuViewSource}}" Margin="310,330,0,237" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="48" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="149" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="90" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Height="420" Width="1300" HorizontalAlignment="Left">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="denumireColumn" ElementStyle="{StaticResource ColumnElementStylePadding}" Binding="{Binding Denumire}" Header="Tip Serviciu" Width="1100" Foreground="#FF6E0000" CanUserResize="False" MinWidth="150">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn x:Name="pretColumn" ElementStyle="{StaticResource ColumnElementStyleCenter}" Binding="{Binding Pret}" Header="Pret (lei)" Width="SizeToHeader" Foreground="#FF000096">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
                 </Grid>
             </TabItem>

@@ -24,3 +24,4 @@ D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpoli
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\Main_menu_page.baml
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\New_user_page.g.cs
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\New_user_page.baml
+D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\Medpolis_Content.g.cs

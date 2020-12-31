@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Clinica_MedpolisModelStoreContainer" CdmEntityContainer="Clinica_MedpolisEntities">
+    <EntitySetMapping Name="Client">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="CNP" ColumnName="CNP" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Parola" ColumnName="Parola" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Concediu">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Concediu">
+        <MappingFragment StoreEntitySet="Concediu">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
+          <ScalarProperty Name="Data_inceput" ColumnName="Data_inceput" />
+          <ScalarProperty Name="Data_final" ColumnName="Data_final" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctor">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="ID_Specialitate" ColumnName="ID_Specialitate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Tura" ColumnName="Tura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Programare">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Programare">
+        <MappingFragment StoreEntitySet="Programare">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+          <ScalarProperty Name="ID_Serviciu" ColumnName="ID_Serviciu" />
+          <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Serviciu">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Serviciu">
+        <MappingFragment StoreEntitySet="Serviciu">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Denumire" ColumnName="Denumire" />
+          <ScalarProperty Name="Pret" ColumnName="Pret" />
+          <ScalarProperty Name="ID_Specialitate" ColumnName="ID_Specialitate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Specialitate">
+      <EntityTypeMapping TypeName="Clinica_MedpolisModel.Specialitate">
+        <MappingFragment StoreEntitySet="Specialitate">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Denumire" ColumnName="Denumire" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

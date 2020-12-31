@@ -64,8 +64,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Client.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Concediu.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Doctor.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Login_page.xaml.cs">
       <DependentUpon>Login_page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Medpolis_model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Programare.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Serviciu.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Specialitate.cs">
+      <DependentUpon>Medpolis_model.tt</DependentUpon>
     </Compile>
     <Page Include="Login_page.xaml">
       <SubType>Designer</SubType>
@@ -96,6 +119,16 @@
     <Compile Include="Main_menu_page.xaml.cs">
       <DependentUpon>Main_menu_page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Medpolis_model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Medpolis_model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Medpolis_model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Medpolis_model.edmx</DependentUpon>
+    </Compile>
     <Compile Include="New_user_page.xaml.cs">
       <DependentUpon>New_user_page.xaml</DependentUpon>
     </Compile>
@@ -116,7 +149,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Medpolis_model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Medpolis_model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Medpolis_model.edmx.diagram">
+      <DependentUpon>Medpolis_model.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Client.datasource" />
+    <None Include="Properties\DataSources\Concediu.datasource" />
+    <None Include="Properties\DataSources\Doctor.datasource" />
+    <None Include="Properties\DataSources\Programare.datasource" />
+    <None Include="Properties\DataSources\Serviciu.datasource" />
+    <None Include="Properties\DataSources\Specialitate.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -148,6 +194,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="email_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Medpolis_model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Medpolis_model.edmx</DependentUpon>
+      <LastGenOutput>Medpolis_model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Medpolis_model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Medpolis_model.edmx</DependentUpon>
+      <LastGenOutput>Medpolis_model.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
