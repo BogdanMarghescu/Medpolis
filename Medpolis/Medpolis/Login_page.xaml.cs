@@ -55,7 +55,7 @@ namespace Medpolis
                                 main_menu.cont_label.Content += email_box.Text;
                                 NavigationService.Navigate(main_menu);
                             }
-                            else MessageBox.Show("Parola gresita!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                            else MessageBox.Show("Parolă greșită!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                         }
                         else MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" nu există!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                     }

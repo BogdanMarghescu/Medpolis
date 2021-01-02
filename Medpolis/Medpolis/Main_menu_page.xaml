@@ -11,6 +11,9 @@
         <Style x:Key="ColumnElementStylePadding" TargetType="TextBlock">
             <Setter Property="Margin" Value="60,0,10,0" />
         </Style>
+        <Style x:Key="ColumnElementStylePadding_name" TargetType="TextBlock">
+            <Setter Property="Margin" Value="15,0,0,0" />
+        </Style>
         <Style x:Key="ColumnElementStyleCenter" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
@@ -25,6 +28,7 @@
         <CollectionViewSource x:Key="specialitateViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Specialitate}, CreateList=True}"/>
         <CollectionViewSource x:Key="specialitateServiciuViewSource" Source="{Binding Serviciu, Source={StaticResource specialitateViewSource}}"/>
         <CollectionViewSource x:Key="clientViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Client}, CreateList=True}"/>
+        <CollectionViewSource x:Key="specialitateDoctorViewSource" Source="{Binding Doctor, Source={StaticResource specialitateViewSource}}"/>
     </Page.Resources>
 
     <Grid>
@@ -70,15 +74,85 @@
                     <Image x:Name="email_icon" HorizontalAlignment="Left" Height="50" Margin="1538,386,0,0" VerticalAlignment="Top" Width="60" Source="email_icon.png" RenderTransformOrigin="0.386,0.981"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="specialitati_tab" Header="Specialități" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+            <TabItem x:Name="specialitati_tab" Header="Specialități" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="specialitati_tab_Loaded">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
                         <GradientStop Color="#FFF07676" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="specialitati_tab_menu" Background="#0000FF">
+                <Grid x:Name="specialitati_tab_menu" DataContext="{StaticResource specialitateViewSource}">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
+                    </Grid.Background>
+                    <ComboBox x:Name="specialitateComboBox_specialitati" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_specialitati_SelectionChanged">
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="440,170,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000"/>
+                    <Label Content="Specialități MEDPOLIS" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="142" Width="1049" FontSize="80" FontWeight="Bold" Foreground="#FF640000" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <DataGrid x:Name="doctoriDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource specialitateDoctorViewSource}}" Margin="60,452,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="48" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="150" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="None" RowHeight="90" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Height="400" Width="800" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="doctoriDataGrid_SelectionChanged">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="numeColumn" ElementStyle="{StaticResource ColumnElementStylePadding}" Header="Doctori Specialitate" Width="790" Foreground="#FF6E0000" CanUserResize="False" MinWidth="150">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Nume"/>
+                                        <Binding Path="Prenume"/>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="doctor_type_label" Content="Doctori specialitate:" HorizontalAlignment="Left" Margin="0,352,0,0" VerticalAlignment="Top" Height="100" Width="900" FontSize="50" FontWeight="Bold" Foreground="#FF640000" VerticalContentAlignment="Center" Padding="100,5,5,5"/>
+                    <Grid x:Name="grid_doctor" DataContext="{StaticResource specialitateDoctorViewSource}" HorizontalAlignment="Left" Margin="1010,490,0,0" VerticalAlignment="Top" Width="850" Height="240">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="650"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="80"/>
+                        </Grid.RowDefinitions>
 
+                        <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="emailTextBox_doctor" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="0" Content="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000"/>
+
+                        <Label Content="Telefon:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="telefonTextBox_doctor" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="1" Content="{Binding Telefon, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000"/>
+
+                        <Label Content="Program:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="program_doctor_label" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="2" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000" Margin="0,0,0,0"/>
+                        <Label x:Name="turaTextBox_doctor" HorizontalAlignment="Left" Height="80" Content="{Binding Tura, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000" Margin="0,250,0,0" Visibility="Hidden"/>
+                    </Grid>
+                    <Label Content="Detalii Doctor Selectat:" HorizontalAlignment="Left" Margin="1010,430,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="#FF7F0000" Width="850" Height="60"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="preturi_tab" Header="Prețuri" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
@@ -92,7 +166,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <ComboBox x:Name="specialitateComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="947,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" SelectionChanged="specialitateComboBox_SelectionChanged" VerticalAlignment="Top">
+                    <ComboBox x:Name="specialitateComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" SelectionChanged="specialitateComboBox_SelectionChanged" VerticalAlignment="Top">
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -113,7 +187,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
                     <Label Content="Prețuri Servicii MEDPOLIS" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="142" Width="1049" FontSize="80" FontWeight="Bold" Foreground="#FF640000" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="439,170,0,0" VerticalAlignment="Top" Height="70" Width="508" FontSize="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000"/>
+                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="440,170,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000"/>
                     <DataGrid x:Name="serviciuDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource specialitateServiciuViewSource}}" Margin="310,330,0,237" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="48" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="149" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="90" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Height="420" Width="1300" HorizontalAlignment="Left">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
@@ -154,15 +228,19 @@
                         <GradientStop Color="#FFF07676" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="programari_tab_menu" Background="#00FF00">
-
+                <Grid x:Name="programari_tab_menu">
+                    <Grid.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="login_background.jpg"/>
+                    </Grid.Background>
+                    <Label Content="Stabiliți o programare la Medpolis:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="56" Padding="70,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,50,0,0" FontWeight="Bold"/>
+                    
                 </Grid>
             </TabItem>
-            <TabItem x:Name="cont_tab" ScrollViewer.CanContentScroll="True" Width="800" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="cont_tab_Loaded">
+            <TabItem x:Name="cont_tab" ScrollViewer.CanContentScroll="True" Width="810" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="cont_tab_Loaded">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" Width="770">
+                    <StackPanel Orientation="Horizontal" Width="800">
                         <Image Source="cont.png" HorizontalAlignment="Left" />
-                        <Label x:Name="cont_label" Content="Contul meu:  " Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="719" FontWeight="SemiBold"/>
+                        <Label x:Name="cont_label" Content="Contul meu:  " Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="747" FontWeight="SemiBold"/>
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Background>
@@ -175,8 +253,8 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <Label x:Name="profile_label" Content="Date de profil ale clientului " HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="1914" FontSize="52" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000"/>
-                    <Grid x:Name="profile_grid" DataContext="{StaticResource clientViewSource}" HorizontalAlignment="Left" Margin="500,150,0,0" VerticalAlignment="Top">
+                    <Label x:Name="profile_label" Content="Date de profil ale clientului " HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="52" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000"/>
+                    <Grid x:Name="profile_grid" DataContext="{StaticResource clientViewSource}" HorizontalAlignment="Left" Margin="500,100,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="170"/>
                             <ColumnDefinition Width="750"/>
@@ -204,7 +282,7 @@
                         <Label Content="Telefon:" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="5" Foreground="#FF7F0000" FontSize="36"/>
                         <Label x:Name="telefonTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="70" Grid.Row="4" Content="{Binding Telefon, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="750" Padding="20,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" FontSize="36"/>
                     </Grid>
-                    <DataGrid x:Name="programari_table" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="100,596,0,10" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="149" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="50" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Width="1520" HorizontalAlignment="Left" Height="320" VerticalAlignment="Top">
+                    <DataGrid x:Name="programari_table" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="100,550,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="150" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="50" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Width="1520" HorizontalAlignment="Left" Height="350" VerticalAlignment="Top">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <Setter Property="IsHitTestVisible" Value="False"/>
@@ -255,8 +333,8 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label x:Name="profile_label_Copy" Content="Programări ale clientului:" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="1914" FontSize="42" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,500,0,0"/>
-                    <Button x:Name="leave_account" Content="Ieși din cont" Margin="1645,800,30,0" VerticalAlignment="Top" Width="240" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
+                    <Label x:Name="profile_label_Copy" Content="Programări ale clientului:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="42" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,450,0,0"/>
+                    <Button x:Name="leave_account" Content="Ieși din cont" Margin="1645,800,30,0" VerticalAlignment="Top" Width="210" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>

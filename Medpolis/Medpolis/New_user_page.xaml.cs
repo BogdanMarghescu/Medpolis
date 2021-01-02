@@ -98,7 +98,7 @@ namespace Medpolis
                             }
                             else MessageBox.Show("Introduceți o adresă de email validă!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                         }
-                        else MessageBox.Show("Introduceți un numar de telefon valid!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                        else MessageBox.Show("Introduceți un număr de telefon valid!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                     }
                     else MessageBox.Show("Introduceți un CNP valid!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                 }

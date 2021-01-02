@@ -25,6 +25,8 @@ namespace Medpolis
         private CollectionViewSource specComboBox;
         private CollectionViewSource pretSpecialitateDatagrid;
         private CollectionViewSource clientDetails;
+        private CollectionViewSource doctorSpecialitateDatagrid;
+        private readonly List<string> tip_program = new List<string>() { "", "8:00 - 14:00", "14:00 - 20:00" };
 
         public Main_menu_page()
         {
@@ -32,6 +34,7 @@ namespace Medpolis
             specComboBox = ((CollectionViewSource)(FindResource("specialitateViewSource")));
             pretSpecialitateDatagrid = ((CollectionViewSource)(FindResource("specialitateServiciuViewSource")));
             clientDetails = ((CollectionViewSource)(FindResource("clientViewSource")));
+            doctorSpecialitateDatagrid = ((CollectionViewSource)(FindResource("specialitateDoctorViewSource")));
             DataContext = this;
         }
 
@@ -69,17 +72,43 @@ namespace Medpolis
                                        Doctor = d.Nume + " " + d.Prenume,
                                        Pret = s.Pret
                                    }).ToList();
-                //foreach (var consultatie in consultatii)
-                //{
-                //    consultatie.Data.ToShortDateString();
-                //}
+                foreach (var consultatie in consultatii)
+                {
+                    consultatie.Data.ToString("g");
+                }
                 programari_table.ItemsSource = consultatii;
             }
         }
 
         private void leave_account_Click(object sender, RoutedEventArgs e)
         {
+            var result = MessageBox.Show("Doriți să părăsiți contul dumneavoastră?", "Părăsire cont", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
+            if (result == MessageBoxResult.OK)
+                NavigationService.Navigate(new Login_page());
+        }
 
+        private void specialitati_tab_Loaded(object sender, RoutedEventArgs e)
+        {
+            medpolis_context.Specialitate.Load();
+            specComboBox.Source = medpolis_context.Specialitate.Local;
+            doctoriDataGrid.SelectedIndex = -1;
+            program_doctor_label.Content = "";
+            doctor_type_label.Content = "Doctori " + ((Specialitate)specialitateComboBox_specialitati.SelectedItem).Denumire;
+        }
+
+        private void specialitateComboBox_specialitati_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            doctor_type_label.Content = "Doctori " + ((Specialitate)specialitateComboBox_specialitati.SelectedItem).Denumire;
+            doctoriDataGrid.SelectedIndex = -1;
+            program_doctor_label.Content = "";
+        }
+
+        private void doctoriDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (turaTextBox_doctor.Content != null)
+            {
+                program_doctor_label.Content = tip_program[(short)turaTextBox_doctor.Content];
+            }
         }
     }
 }
