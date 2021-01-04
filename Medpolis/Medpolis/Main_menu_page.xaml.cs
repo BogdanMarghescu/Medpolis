@@ -72,10 +72,6 @@ namespace Medpolis
                                        Doctor = d.Nume + " " + d.Prenume,
                                        Pret = s.Pret
                                    }).ToList();
-                foreach (var consultatie in consultatii)
-                {
-                    consultatie.Data.ToString("g");
-                }
                 programari_table.ItemsSource = consultatii;
             }
         }
@@ -109,6 +105,12 @@ namespace Medpolis
             {
                 program_doctor_label.Content = tip_program[(short)turaTextBox_doctor.Content];
             }
+        }
+
+        private void specialitateComboBox_programare_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            doctorComboBox.SelectedIndex = -1;
+            serviciuComboBox.SelectedIndex = -1;
         }
     }
 }

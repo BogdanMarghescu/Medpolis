@@ -85,7 +85,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <ComboBox x:Name="specialitateComboBox_specialitati" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_specialitati_SelectionChanged">
+                    <ComboBox x:Name="specialitateComboBox_specialitati" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,464,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="500" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_specialitati_SelectionChanged">
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -166,7 +166,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="login_background.jpg" Stretch="UniformToFill"/>
                     </Grid.Background>
-                    <ComboBox x:Name="specialitateComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,557,100" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="410" SelectionChanged="specialitateComboBox_SelectionChanged" VerticalAlignment="Top">
+                    <ComboBox x:Name="specialitateComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="950,170,464,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" Width="500" SelectionChanged="specialitateComboBox_SelectionChanged" VerticalAlignment="Top">
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -228,12 +228,83 @@
                         <GradientStop Color="#FFF07676" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="programari_tab_menu">
+                <Grid x:Name="programari_tab_menu" DataContext="{StaticResource specialitateViewSource}">
                     <Grid.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="login_background.jpg"/>
                     </Grid.Background>
                     <Label Content="Stabiliți o programare la Medpolis:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="56" Padding="70,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,50,0,0" FontWeight="Bold"/>
-                    
+                    <ComboBox x:Name="specialitateComboBox_programare" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="620,192,594,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_programare_SelectionChanged" >
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="110,190,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label Content="Selectează Doctor:" HorizontalAlignment="Left" Margin="110,300,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Source={StaticResource specialitateDoctorViewSource}}" Margin="620,300,594,0" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top">
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Nume}" Padding="30,0,0,0" Foreground="#FF7F0000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                                    <Label Content="{Binding Prenume}" Padding="10,0,0,0" Foreground="#FF7F0000" VerticalContentAlignment="Center"></Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox x:Name="serviciuComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding Source={StaticResource specialitateServiciuViewSource}}" Margin="620,430,594,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" Width="700">
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Label Content="Selectează Serviciu:" HorizontalAlignment="Left" Margin="110,430,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="cont_tab" ScrollViewer.CanContentScroll="True" Width="810" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="cont_tab_Loaded">
