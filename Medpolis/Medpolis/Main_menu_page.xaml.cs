@@ -16,9 +16,6 @@ using System.Data.Entity;
 
 namespace Medpolis
 {
-    /// <summary>
-    /// Interaction logic for Main_menu_page.xaml
-    /// </summary>
     public partial class Main_menu_page : Page
     {
         private Clinica_MedpolisEntities medpolis_context = new Clinica_MedpolisEntities();
@@ -27,6 +24,47 @@ namespace Medpolis
         private CollectionViewSource clientDetails;
         private CollectionViewSource doctorSpecialitateDatagrid;
         private readonly List<string> tip_program = new List<string>() { "8:00 - 14:00", "14:00 - 20:00" };
+
+        internal class Programare_Detalii
+        {
+            public int ID { get; set; }
+            public string Denumire { get; set; }
+            public DateTime Data { get; set; }
+            public string Doctor { get; set; }
+            public int Pret { get; set; }
+
+            public Programare_Detalii() { ; }
+
+            public Programare_Detalii(int iD, string denumire, DateTime data, string doctor, int pret)
+            {
+                ID = iD;
+                Denumire = denumire;
+                Data = data;
+                Doctor = doctor;
+                Pret = pret;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is Programare_Detalii other &&
+                       ID == other.ID &&
+                       Denumire == other.Denumire &&
+                       Data == other.Data &&
+                       Doctor == other.Doctor &&
+                       Pret == other.Pret;
+            }
+
+            public override int GetHashCode()
+            {
+                int hashCode = -180803959;
+                hashCode = hashCode * -1521134295 + ID.GetHashCode();
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Denumire);
+                hashCode = hashCode * -1521134295 + Data.GetHashCode();
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Doctor);
+                hashCode = hashCode * -1521134295 + Pret.GetHashCode();
+                return hashCode;
+            }
+        }
 
         private void doctorSelectProgramari_changeVisibility(Visibility visibility)
         {
@@ -72,6 +110,28 @@ namespace Medpolis
                     select_data.BlackoutDates.Add(new CalendarDateRange(date, date.AddDays(1)));
         }
 
+        private Client get_user_account(Clinica_MedpolisEntities context)
+        {
+            return (from c in context.Client where c.Email.Equals(email_label.Content.ToString().Trim()) select c).Take(1).ToList()[0];
+        }
+
+        private void get_programari_table(Clinica_MedpolisEntities context, Client user)
+        {
+            programari_table.ItemsSource = (from p in context.Programare
+                                            join c in context.Client on p.ID_Client equals c.ID
+                                            join s in context.Serviciu on p.ID_Serviciu equals s.ID
+                                            join d in context.Doctor on p.ID_Doctor equals d.ID
+                                            where c.ID == user.ID
+                                            select new Programare_Detalii
+                                            {
+                                                ID = p.ID,
+                                                Denumire = s.Denumire,
+                                                Data = p.Data,
+                                                Doctor = d.Nume + " " + d.Prenume,
+                                                Pret = s.Pret
+                                            }).ToList();
+        }
+
         private DateTime getFullData(DateTime date, string hourString)
         {
             var full_hour = hourString.Split(':');
@@ -86,6 +146,7 @@ namespace Medpolis
             clientDetails = ((CollectionViewSource)(FindResource("clientViewSource")));
             doctorSpecialitateDatagrid = ((CollectionViewSource)(FindResource("specialitateDoctorViewSource")));
             select_data_setup();
+            
             DataContext = this;
         }
 
@@ -106,24 +167,11 @@ namespace Medpolis
             programari_table.SelectedIndex = -1;
             using (var context = new Clinica_MedpolisEntities())
             {
-                var user_email = cont_label.Content.ToString().Substring(("Contul meu:  ").Length).Trim();
-                var user = (from c in context.Client where c.Email.Equals(user_email) select c).Take(1).ToList();
+                var user = get_user_account(context);
                 medpolis_context.Client.Load();
-                clientDetails.Source = user;
-                profile_label.Content += (user[0].Prenume + " " + user[0].Nume);
-                var consultatii = (from p in context.Programare
-                                   join c in context.Client on p.ID_Client equals c.ID
-                                   join s in context.Serviciu on p.ID_Serviciu equals s.ID
-                                   join d in context.Doctor on p.ID_Doctor equals d.ID
-                                   where c.Email.Equals(user_email)
-                                   select new
-                                   {
-                                       Denumire = s.Denumire,
-                                       Data = p.Data,
-                                       Doctor = d.Nume + " " + d.Prenume,
-                                       Pret = s.Pret
-                                   }).ToList();
-                programari_table.ItemsSource = consultatii;
+                clientDetails.Source = new List<Client> { user };
+                profile_label.Content += (user.Prenume + " " + user.Nume);
+                get_programari_table(context, user);
             }
         }
 
@@ -132,6 +180,21 @@ namespace Medpolis
             var result = MessageBox.Show("Doriți să părăsiți contul dumneavoastră?", "Părăsire cont", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
             if (result == MessageBoxResult.OK)
                 NavigationService.Navigate(new Login_page());
+        }
+
+        private void DeleteProgramareCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            var programare = e.Parameter as Programare_Detalii;
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                var prog = (from p in context.Programare
+                            where p.ID == programare.ID
+                            select p).FirstOrDefault();
+                context.Programare.Remove(prog);
+                context.SaveChanges();
+                var user = get_user_account(context);
+                get_programari_table(context, user);
+            }
         }
 
         private void specialitati_tab_Loaded(object sender, RoutedEventArgs e)
@@ -252,8 +315,7 @@ namespace Medpolis
                     var new_date = getFullData(select_data.SelectedDate.Value, ora_programare);
                     using (var context = new Clinica_MedpolisEntities())
                     {
-                        var user_email = cont_label.Content.ToString().Substring(("Contul meu:  ").Length).Trim();
-                        var user = (from c in context.Client where c.Email.Equals(user_email) select c).Take(1).ToList()[0];
+                        var user = get_user_account(context);
                         var programari_doctor_ziua_selectata = (from p in context.Programare
                                                                 where p.ID_Doctor == doctor_selectat.ID
                                                                 where p.Data == new_date
@@ -327,8 +389,7 @@ namespace Medpolis
                                 {
                                     using (var context = new Clinica_MedpolisEntities())
                                     {
-                                        var user_email = cont_label.Content.ToString().Substring(("Contul meu:  ").Length).Trim();
-                                        var user = (from c in context.Client where c.Email.Equals(user_email) select c).Take(1).ToList()[0];
+                                        var user = get_user_account(context);
                                         var newProgramare = new Programare()
                                         {
                                             ID_Client = user.ID,
@@ -352,19 +413,7 @@ namespace Medpolis
                                         detaliiLabels_changeVisibility(Visibility.Hidden);
                                         program_doctor_TextBox.Content = "";
                                         doctoriDataGrid.SelectedIndex = -1;
-                                        var consultatii = (from p in context.Programare
-                                                           join c in context.Client on p.ID_Client equals c.ID
-                                                           join s in context.Serviciu on p.ID_Serviciu equals s.ID
-                                                           join d in context.Doctor on p.ID_Doctor equals d.ID
-                                                           where c.Email.Equals(user_email)
-                                                           select new
-                                                           {
-                                                               Denumire = s.Denumire,
-                                                               Data = p.Data,
-                                                               Doctor = d.Nume + " " + d.Prenume,
-                                                               Pret = s.Pret
-                                                           }).ToList();
-                                        programari_table.ItemsSource = consultatii;
+                                        get_programari_table(context, user);
                                     }
                                 }
                             }

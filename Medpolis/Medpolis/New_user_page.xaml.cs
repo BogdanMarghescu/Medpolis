@@ -88,7 +88,7 @@ namespace Medpolis
                                             context.SaveChanges();
                                             MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" a fost creat!", "Cont nou creat", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
                                             var main_menu = new Main_menu_page();
-                                            main_menu.cont_label.Content += email_box.Text;
+                                            main_menu.email_label.Content = email_box.Text;
                                             NavigationService.Navigate(main_menu);
                                         }
                                         else MessageBox.Show("Contul cu adresa de email \"" + email_box.Text + "\" este deja creat!", "Eroare la creare utilizator nou", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);

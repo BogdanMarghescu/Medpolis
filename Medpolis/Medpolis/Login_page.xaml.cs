@@ -52,7 +52,7 @@ namespace Medpolis
                             if (password_box.Password.Equals(user[0].Parola))
                             {
                                 var main_menu = new Main_menu_page();
-                                main_menu.cont_label.Content += email_box.Text;
+                                main_menu.email_label.Content = email_box.Text;
                                 NavigationService.Navigate(main_menu);
                             }
                             else MessageBox.Show("Parolă greșită!", "Eroare de logare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);

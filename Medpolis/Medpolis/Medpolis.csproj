@@ -196,6 +196,7 @@
     <Resource Include="email_icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="delete_icon.png" />
     <Content Include="Medpolis_model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Medpolis_model.edmx</DependentUpon>

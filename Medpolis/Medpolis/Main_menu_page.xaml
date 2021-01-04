@@ -225,7 +225,12 @@
         <CollectionViewSource x:Key="specialitateServiciuViewSource" Source="{Binding Serviciu, Source={StaticResource specialitateViewSource}}"/>
         <CollectionViewSource x:Key="clientViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Client}, CreateList=True}"/>
         <CollectionViewSource x:Key="specialitateDoctorViewSource" Source="{Binding Doctor, Source={StaticResource specialitateViewSource}}"/>
+        <RoutedUICommand x:Key="DeleteProgramareCommand" Text="Delete Programare"/>
     </Page.Resources>
+
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource DeleteProgramareCommand}" Executed="DeleteProgramareCommandHandler"/>
+    </Page.CommandBindings>
 
     <Grid>
         <TabControl x:Name="tab_menu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="1">
@@ -538,7 +543,8 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" Width="800">
                         <Image Source="cont.png" HorizontalAlignment="Left" />
-                        <Label x:Name="cont_label" Content="Contul meu:  " Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="747" FontWeight="SemiBold"/>
+                        <Label x:Name="cont_label" Content="Contul meu:" Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="170" FontWeight="SemiBold" Height="50"/>
+                        <Label x:Name="email_label" Foreground="#FF7F0000" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="580" FontWeight="SemiBold" Height="50" Padding="10,5,5,5"/>
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Background>
@@ -580,17 +586,36 @@
                         <Label Content="Telefon:" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="5" Foreground="#FF7F0000" FontSize="36"/>
                         <Label x:Name="telefonTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="70" Grid.Row="4" Content="{Binding Telefon, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="750" Padding="20,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" FontSize="36"/>
                     </Grid>
-                    <DataGrid x:Name="programari_table" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="100,550,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="150" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="50" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Width="1520" HorizontalAlignment="Left" Height="350" VerticalAlignment="Top">
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Setter Property="IsHitTestVisible" Value="False"/>
-                            </Style>
-                        </DataGrid.RowStyle>
+                    <DataGrid x:Name="programari_table" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="125,550,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Foreground="Yellow" BorderBrush="{x:Null}" FontSize="30" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinColumnWidth="70" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" HeadersVisibility="Column" RowHeight="70" SelectionMode="Single" IsReadOnly="True" RowBackground="Transparent" AlternatingRowBackground="Transparent" SelectedIndex="-1" Background="{x:Null}" Width="1670" HorizontalAlignment="Left" Height="365" VerticalAlignment="Top">
+
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
                             </Style>
                         </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                        <Setter Property="BorderBrush">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="Transparent"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Foreground"
+                            Value="{DynamicResource
+                                   {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="Transparent"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+
                         <DataGrid.Columns>
 
                             <DataGridTextColumn x:Name="denumire_programare_Column" ElementStyle="{StaticResource ColumnElementStylePadding}" Binding="{Binding Denumire}" Header="Tip Serviciu" Width="600" Foreground="#FF6E0000" CanUserResize="False" MinWidth="150">
@@ -620,7 +645,7 @@
                                 </DataGridTextColumn.HeaderStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn x:Name="pret_programare_Column" ElementStyle="{StaticResource ColumnElementStyleCenter}" Binding="{Binding Pret}" Header="Preț (lei)" Width="SizeToHeader" Foreground="#FF000096" CanUserResize="False">
+                            <DataGridTextColumn x:Name="pret_programare_Column" ElementStyle="{StaticResource ColumnElementStyleCenter}" Binding="{Binding Pret}" Header="Preț (lei)" Width="150" Foreground="#FF000096" CanUserResize="False">
                                 <DataGridTextColumn.HeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -629,10 +654,30 @@
                                 </DataGridTextColumn.HeaderStyle>
                             </DataGridTextColumn>
 
+                            <DataGridTemplateColumn x:Name="delete_buttons" Width="150">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button CommandParameter="{Binding}" Command="{StaticResource DeleteProgramareCommand}" Foreground="#FFFFFF4B" BorderBrush="#FFFFFF4B" FontFamily="Gill Sans MT" FontSize="28" Cursor="Hand" Content="Eliminare" BorderThickness="5">
+                                            <Button.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FFEA2F2F" Offset="1"/>
+                                                    <GradientStop Color="#FF7F0000"/>
+                                                </LinearGradientBrush>
+                                            </Button.Background>
+                                            <Button.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="25"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="profile_label_Copy" Content="Programări ale clientului:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="42" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,450,0,0"/>
-                    <Button x:Name="leave_account" Content="Ieși din cont" Margin="1645,800,30,0" VerticalAlignment="Top" Width="210" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
+                    <Button x:Name="leave_account" Content="Ieși din cont" Margin="1420,390,284,0" VerticalAlignment="Top" Width="210" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>
