@@ -627,7 +627,7 @@
                                 </DataGridTextColumn.HeaderStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn x:Name="data_programare_Column" ElementStyle="{StaticResource ColumnElementStyleCenter}" Binding="{Binding Data}" Header="Dată Programare" Width="300" Foreground="#FF6E0000" CanUserResize="False">
+                            <DataGridTextColumn x:Name="data_programare_Column" ElementStyle="{StaticResource ColumnElementStyleCenter}" Binding="{Binding DataReadable}" Header="Dată Programare" Width="300" Foreground="#FF6E0000" CanUserResize="False">
                                 <DataGridTextColumn.HeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>

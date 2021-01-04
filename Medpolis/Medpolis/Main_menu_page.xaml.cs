@@ -32,8 +32,9 @@ namespace Medpolis
             public DateTime Data { get; set; }
             public string Doctor { get; set; }
             public int Pret { get; set; }
+            public string DataReadable { get; set; }
 
-            public Programare_Detalii() { ; }
+            public Programare_Detalii() { DataReadable = ""; }
 
             public Programare_Detalii(int iD, string denumire, DateTime data, string doctor, int pret)
             {
@@ -43,6 +44,8 @@ namespace Medpolis
                 Doctor = doctor;
                 Pret = pret;
             }
+
+            public void ConvertData() { DataReadable = Data.ToString("g"); }
 
             public override bool Equals(object obj)
             {
@@ -117,19 +120,22 @@ namespace Medpolis
 
         private void get_programari_table(Clinica_MedpolisEntities context, Client user)
         {
-            programari_table.ItemsSource = (from p in context.Programare
-                                            join c in context.Client on p.ID_Client equals c.ID
-                                            join s in context.Serviciu on p.ID_Serviciu equals s.ID
-                                            join d in context.Doctor on p.ID_Doctor equals d.ID
-                                            where c.ID == user.ID
-                                            select new Programare_Detalii
-                                            {
-                                                ID = p.ID,
-                                                Denumire = s.Denumire,
-                                                Data = p.Data,
-                                                Doctor = d.Nume + " " + d.Prenume,
-                                                Pret = s.Pret
-                                            }).ToList();
+            var programari = (from p in context.Programare
+                              join c in context.Client on p.ID_Client equals c.ID
+                              join s in context.Serviciu on p.ID_Serviciu equals s.ID
+                              join d in context.Doctor on p.ID_Doctor equals d.ID
+                              where c.ID == user.ID
+                              select new Programare_Detalii
+                              {
+                                  ID = p.ID,
+                                  Denumire = s.Denumire,
+                                  Data = p.Data,
+                                  Doctor = d.Nume + " " + d.Prenume,
+                                  Pret = s.Pret
+                              }).ToList();
+            foreach (var programare in programari)
+                programare.ConvertData();
+            programari_table.ItemsSource = programari;
         }
 
         private DateTime getFullData(DateTime date, string hourString)
@@ -146,7 +152,12 @@ namespace Medpolis
             clientDetails = ((CollectionViewSource)(FindResource("clientViewSource")));
             doctorSpecialitateDatagrid = ((CollectionViewSource)(FindResource("specialitateDoctorViewSource")));
             select_data_setup();
-            
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                context.Programare.RemoveRange(from p in context.Programare where p.Data < DateTime.Now select p);
+                context.Concediu.RemoveRange(from c in context.Concediu where c.Data_final < DateTime.Now select c);
+                context.SaveChanges();
+            }
             DataContext = this;
         }
 

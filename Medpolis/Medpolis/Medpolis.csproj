@@ -187,9 +187,6 @@
     <Resource Include="login_background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="background_2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="phone_icon.png" />
   </ItemGroup>
   <ItemGroup>
