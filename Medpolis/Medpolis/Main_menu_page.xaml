@@ -11,9 +11,6 @@
         <Style x:Key="ColumnElementStylePadding" TargetType="TextBlock">
             <Setter Property="Margin" Value="60,0,10,0" />
         </Style>
-        <Style x:Key="ColumnElementStylePadding_name" TargetType="TextBlock">
-            <Setter Property="Margin" Value="15,0,0,0" />
-        </Style>
         <Style x:Key="ColumnElementStyleCenter" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
@@ -25,6 +22,205 @@
             <GradientStop Color="#FF1D4855" Offset="0.542"/>
             <GradientStop Color="#FF193A44" Offset="0.526"/>
         </LinearGradientBrush>
+        <Style x:Key="DatePickerStyle.Centred" TargetType="{x:Type DatePicker}">
+            <Setter Property="Foreground" Value="#FF333333" />
+            <Setter Property="IsTodayHighlighted" Value="True" />
+            <Setter Property="SelectedDateFormat" Value="Short" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint=".5,0" StartPoint=".5,1">
+                        <GradientStop Color="#FFA3AEB9" Offset="0" />
+                        <GradientStop Color="#FF8399A9" Offset="0.375" />
+                        <GradientStop Color="#FF718597" Offset="0.375" />
+                        <GradientStop Color="#FF617584" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_DisabledVisual" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid.Resources>
+                                    <SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF" />
+                                    <ControlTemplate x:Key="DropDownButtonTemplate" TargetType="{x:Type Button}">
+                                        <Grid>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualStateGroup.Transitions>
+                                                        <VisualTransition GeneratedDuration="0" />
+                                                        <VisualTransition GeneratedDuration="0:0:0.1" To="MouseOver" />
+                                                        <VisualTransition GeneratedDuration="0:0:0.1" To="Pressed" />
+                                                    </VisualStateGroup.Transitions>
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="MouseOver">
+                                                        <Storyboard>
+                                                            <ColorAnimation Duration="0" To="#FF448DCA" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                    Storyboard.TargetName="Background" />
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[3].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#7FFFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#CCFFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#F2FFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                                  Storyboard.TargetName="Background">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#FF448DCA" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                                   Storyboard.TargetName="Highlight">
+                                                                <SplineDoubleKeyFrame KeyTime="0" Value="1" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#EAFFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#C6FFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[3].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#6BFFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                                                  Storyboard.TargetName="BackgroundGradient">
+                                                                <SplineColorKeyFrame KeyTime="0" Value="#F4FFFFFF" />
+                                                            </ColorAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled" />
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <Grid Background="#11FFFFFF" FlowDirection="LeftToRight" HorizontalAlignment="Center" Height="18" Margin="0" VerticalAlignment="Center"
+                                          Width="19">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20*" />
+                                                    <ColumnDefinition Width="20*" />
+                                                    <ColumnDefinition Width="20*" />
+                                                    <ColumnDefinition Width="20*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="23*" />
+                                                    <RowDefinition Height="19*" />
+                                                    <RowDefinition Height="19*" />
+                                                    <RowDefinition Height="19*" />
+                                                </Grid.RowDefinitions>
+                                                <Border x:Name="Highlight" BorderBrush="#FF45D6FA" BorderThickness="1" Grid.ColumnSpan="4" CornerRadius="0,0,1,1" Margin="-1"
+                                                Opacity="0" Grid.Row="0" Grid.RowSpan="4" />
+                                                <Border x:Name="Background" BorderBrush="#FFFFFFFF" BorderThickness="1" Background="#FF1F3B53" Grid.ColumnSpan="4" CornerRadius=".5"
+                                                Margin="0,-1,0,0" Opacity="1" Grid.Row="1" Grid.RowSpan="3" />
+                                                <Border x:Name="BackgroundGradient" BorderBrush="#BF000000" BorderThickness="1" Grid.ColumnSpan="4" CornerRadius=".5" Margin="0,-1,0,0"
+                                                Opacity="1" Grid.Row="1" Grid.RowSpan="3">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush EndPoint=".7,1" StartPoint=".7,0">
+                                                            <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                                            <GradientStop Color="#F9FFFFFF" Offset="0.375" />
+                                                            <GradientStop Color="#E5FFFFFF" Offset="0.625" />
+                                                            <GradientStop Color="#C6FFFFFF" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Rectangle Grid.ColumnSpan="4" Grid.RowSpan="1" StrokeThickness="1">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush EndPoint="0.3,-1.1" StartPoint="0.46,1.6">
+                                                            <GradientStop Color="#FF4084BD" />
+                                                            <GradientStop Color="#FFAFCFEA" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                    <Rectangle.Stroke>
+                                                        <LinearGradientBrush EndPoint="0.48,-1" StartPoint="0.48,1.25">
+                                                            <GradientStop Color="#FF494949" />
+                                                            <GradientStop Color="#FF9F9F9F" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Stroke>
+                                                </Rectangle>
+                                                <Path Grid.ColumnSpan="4" Grid.Column="0"
+                                              Data="M11.426758,8.4305077 L11.749023,8.4305077 L11.749023,16.331387 L10.674805,16.331387 L10.674805,10.299648 L9.0742188,11.298672 L9.0742188,10.294277 C9.4788408,10.090176 9.9094238,9.8090878 10.365967,9.4510155 C10.82251,9.0929432 11.176106,8.7527733 11.426758,8.4305077 z M14.65086,8.4305077 L18.566387,8.4305077 L18.566387,9.3435936 L15.671368,9.3435936 L15.671368,11.255703 C15.936341,11.058764 16.27293,10.960293 16.681133,10.960293 C17.411602,10.960293 17.969301,11.178717 18.354229,11.615566 C18.739157,12.052416 18.931622,12.673672 18.931622,13.479336 C18.931622,15.452317 18.052553,16.438808 16.294415,16.438808 C15.560365,16.438808 14.951641,16.234707 14.468243,15.826504 L14.881817,14.929531 C15.368796,15.326992 15.837872,15.525723 16.289043,15.525723 C17.298809,15.525723 17.803692,14.895514 17.803692,13.635098 C17.803692,12.460618 17.305971,11.873379 16.310528,11.873379 C15.83071,11.873379 15.399232,12.079271 15.016094,12.491055 L14.65086,12.238613 z"
+                                              Fill="#FF2F2F2F" HorizontalAlignment="Center" Margin="4,3,4,3" Grid.Row="1" Grid.RowSpan="3" RenderTransformOrigin="0.5,0.5"
+                                              Stretch="Fill" VerticalAlignment="Center" />
+                                                <Ellipse Grid.ColumnSpan="4" Fill="#FFFFFFFF" HorizontalAlignment="Center" Height="3" StrokeThickness="0" VerticalAlignment="Center"
+                                                 Width="3" />
+                                                <Border x:Name="DisabledVisual" BorderBrush="#B2FFFFFF" BorderThickness="1" Grid.ColumnSpan="4" CornerRadius="0,0,.5,.5" Opacity="0"
+                                                Grid.Row="0" Grid.RowSpan="4" />
+                                            </Grid>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="PART_Button" Grid.Column="1" Foreground="{TemplateBinding Foreground}" Focusable="False" HorizontalAlignment="Left" Margin="3,0,3,0"
+                                Grid.Row="0" Template="{StaticResource DropDownButtonTemplate}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Width="20" Height="20" MinWidth="20" MinHeight="20" />
+                                <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" Foreground="{TemplateBinding Foreground}" Focusable="{TemplateBinding Focusable}"
+                                           HorizontalContentAlignment="Stretch" Grid.Row="0" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Grid x:Name="PART_DisabledVisual" Grid.ColumnSpan="2" Grid.Column="0" IsHitTestVisible="False" Opacity="0" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0" Fill="#A5FFFFFF" RadiusY="1" Grid.Row="0" RadiusX="1" />
+                                    <Rectangle Grid.Column="1" Fill="#A5FFFFFF" Height="18" Margin="3,0,3,0" RadiusY="1" Grid.Row="0" RadiusX="1" Width="19" />
+                                    <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <Viewbox Height="320" Width="320">
+                            <CalendarItem x:Name="PART_CalendarItem"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Foreground="{TemplateBinding Foreground}" 
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center" 
+                                FontFamily="Gill Sans MT"/>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <CollectionViewSource x:Key="specialitateViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Specialitate}, CreateList=True}"/>
         <CollectionViewSource x:Key="specialitateServiciuViewSource" Source="{Binding Serviciu, Source={StaticResource specialitateViewSource}}"/>
         <CollectionViewSource x:Key="clientViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Client}, CreateList=True}"/>
@@ -142,17 +338,16 @@
                             <RowDefinition Height="80"/>
                         </Grid.RowDefinitions>
 
-                        <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="email_doctor_label" Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
                         <Label x:Name="emailTextBox_doctor" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="0" Content="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000"/>
 
-                        <Label Content="Telefon:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="telefon_doctor_label" Content="Telefon:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
                         <Label x:Name="telefonTextBox_doctor" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="1" Content="{Binding Telefon, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000"/>
 
-                        <Label Content="Program:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
-                        <Label x:Name="program_doctor_label" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="2" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000" Margin="0,0,0,0"/>
-                        <Label x:Name="turaTextBox_doctor" HorizontalAlignment="Left" Height="80" Content="{Binding Tura, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000" Margin="0,250,0,0" Visibility="Hidden"/>
+                        <Label x:Name="program_doctor_label" Content="Program:" Grid.Column="0" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="80" Width="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="42" Foreground="#FF7F0000" Padding="5,5,10,5"/>
+                        <Label x:Name="program_doctor_TextBox" Grid.Column="1" HorizontalAlignment="Left" Height="80" Grid.Row="2" VerticalAlignment="Top" Width="650" VerticalContentAlignment="Center" Padding="20,5,5,5" FontSize="42" Foreground="#FF7F0000" Margin="0,0,0,0"/>
                     </Grid>
-                    <Label Content="Detalii Doctor Selectat:" HorizontalAlignment="Left" Margin="1010,430,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="#FF7F0000" Width="850" Height="60"/>
+                    <Label x:Name="detalii_doctor_label" Content="Detalii Doctor Selectat:" HorizontalAlignment="Left" Margin="1010,430,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="#FF7F0000" Width="850" Height="60"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="preturi_tab" Header="Prețuri" ScrollViewer.CanContentScroll="True" Width="150" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
@@ -221,7 +416,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="programari_tab" Header="Stabilire Programare" ScrollViewer.CanContentScroll="True" Width="250" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000">
+            <TabItem x:Name="programari_tab" Header="Stabilire Programare" ScrollViewer.CanContentScroll="True" Width="250" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="programari_tab_Loaded">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -233,7 +428,14 @@
                         <ImageBrush Stretch="UniformToFill" ImageSource="login_background.jpg"/>
                     </Grid.Background>
                     <Label Content="Stabiliți o programare la Medpolis:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="56" Padding="70,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,50,0,0" FontWeight="Bold"/>
-                    <ComboBox x:Name="specialitateComboBox_programare" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="620,192,594,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_programare_SelectionChanged" >
+                    <Label x:Name="select_specialitate_label" Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Height="70" Width="700" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label x:Name="select_doctor_label" Content="Selectează Doctor:" HorizontalAlignment="Left" Margin="0,300,0,0" VerticalAlignment="Top" Height="70" Width="700" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label x:Name="select_serviciu_label" Content="Selectează Serviciu:" HorizontalAlignment="Left" Margin="0,400,0,0" VerticalAlignment="Top" Height="70" Width="700" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label x:Name="select_data_label" Content="Selectează data programării:" HorizontalAlignment="Left" Margin="0,500,0,0" VerticalAlignment="Top" Height="70" Width="700" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label x:Name="select_ora_label" Content="Selectează ora programării:" HorizontalAlignment="Left" Margin="0,600,0,0" VerticalAlignment="Top" Height="70" Width="700" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
+                    <Label x:Name="pret_programare_label" Content="Preț consultație: " HorizontalAlignment="Left" Margin="400,770,0,0" VerticalAlignment="Top" Height="70" Width="634" FontSize="48" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5"/>
+                    <Label x:Name="notificare_label" Margin="850,600,0,0" VerticalAlignment="Top" Height="70" FontSize="40" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5" HorizontalContentAlignment="Center"/>
+                    <ComboBox x:Name="specialitateComboBox_programare" DisplayMemberPath="Denumire" ItemsSource="{Binding}" Margin="700,200,514,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" SelectionChanged="specialitateComboBox_programare_SelectionChanged" >
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -253,9 +455,7 @@
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                     </ComboBox>
-                    <Label Content="Selectează Specialitatea:" HorizontalAlignment="Left" Margin="110,190,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
-                    <Label Content="Selectează Doctor:" HorizontalAlignment="Left" Margin="110,300,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
-                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Source={StaticResource specialitateDoctorViewSource}}" Margin="620,300,594,0" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top">
+                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Source={StaticResource specialitateDoctorViewSource}}" Margin="700,300,514,0" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" SelectionChanged="doctorComboBox_SelectionChanged">
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -283,7 +483,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox x:Name="serviciuComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding Source={StaticResource specialitateServiciuViewSource}}" Margin="620,430,594,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" Width="700">
+                    <ComboBox x:Name="serviciuComboBox" DisplayMemberPath="Denumire" ItemsSource="{Binding Source={StaticResource specialitateServiciuViewSource}}" Margin="700,400,514,0" SelectedValuePath="Denumire" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" Height="70" VerticalAlignment="Top" Width="700" SelectionChanged="serviciuComboBox_SelectionChanged">
                         <ComboBox.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="Black" Offset="1"/>
@@ -303,8 +503,35 @@
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                     </ComboBox>
-                    <Label Content="Selectează Serviciu:" HorizontalAlignment="Left" Margin="110,430,0,0" VerticalAlignment="Top" Height="70" Width="510" FontSize="48" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FF640000" Padding="5,5,20,5"/>
-
+                    <DatePicker x:Name="select_data" HorizontalAlignment="Left" Margin="700,500,0,0" VerticalAlignment="Top" Height="70" Width="400" Foreground="#FF7A1A1A" FontSize="42" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="50,2,2,2" FontWeight="Bold" FirstDayOfWeek="Monday" Cursor="Hand" BorderBrush="{x:Null}" Background="{x:Null}" SelectedDateFormat="Short" CalendarStyle="{DynamicResource styleCalendar}" SelectedDateChanged="select_data_SelectedDateChanged"/>
+                    <ComboBox x:Name="oraComboBox" HorizontalAlignment="Left" Margin="700,600,0,0" VerticalAlignment="Top" Width="150" Height="70" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF7F0000" SelectionChanged="oraComboBox_SelectionChanged" >
+                        <ComboBox.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="1"/>
+                                <GradientStop Color="#FFF07676"/>
+                                <GradientStop Color="#FF9D4D4D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.BorderBrush>
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="#FFF07676" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                    </ComboBox>
+                    <Button x:Name="stabilire_programare_button" Content="Stabilire programare" Margin="1000,770,495,0" VerticalAlignment="Top" Width="350" Height="70" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="stabilire_programare_button_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                                <GradientStop Color="#FFEA2F2F"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem x:Name="cont_tab" ScrollViewer.CanContentScroll="True" Width="810" Height="55" FontFamily="Gill Sans MT" FontSize="24" Foreground="#FF7F0000" Loaded="cont_tab_Loaded">
