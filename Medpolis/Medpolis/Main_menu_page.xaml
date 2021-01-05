@@ -677,7 +677,35 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="profile_label_Copy" Content="Programări ale clientului:" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="1914" FontSize="42" Padding="71,5,5,5" VerticalContentAlignment="Center" Foreground="#FF7F0000" Margin="0,450,0,0"/>
-                    <Button x:Name="leave_account" Content="Ieși din cont" Margin="1420,390,284,0" VerticalAlignment="Top" Width="210" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
+                    <Button x:Name="leave_account" Content="Părăsire cont Medpolis" Margin="1420,390,34,0" VerticalAlignment="Top" Width="460" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="leave_account_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                                <GradientStop Color="#FFEA2F2F"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
+                    <Button x:Name="crystal_report_viewer" Content="Vizualizare raport programări" Margin="1420,280,34,0" VerticalAlignment="Top" Width="460" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="crystal_report_viewer_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                                <GradientStop Color="#FFEA2F2F"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
+                    <Button x:Name="report_viewer" Content="Vizualizare raport doctori" Margin="1420,160,34,0" VerticalAlignment="Top" Width="460" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="leave_account" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="report_viewer_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>

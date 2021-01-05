@@ -16,9 +16,6 @@ using System.Text.RegularExpressions;
 
 namespace Medpolis
 {
-    /// <summary>
-    /// Interaction logic for Login_page.xaml
-    /// </summary>
     public partial class Login_page : Page
     {
         private static bool IsEmail(string text)
@@ -49,7 +46,8 @@ namespace Medpolis
                         var user = (((from c in context.Client where c.Email.Equals(email_box.Text) select c).Take(1))).ToList();
                         if (user.Count() > 0)
                         {
-                            if (password_box.Password.Equals(user[0].Parola))
+                            var passwd_encryption = new PasswordEncryption();
+                            if (password_box.Password.Equals(passwd_encryption.Decrypt(user[0].Parola)))
                             {
                                 var main_menu = new Main_menu_page();
                                 main_menu.email_label.Content = email_box.Text;

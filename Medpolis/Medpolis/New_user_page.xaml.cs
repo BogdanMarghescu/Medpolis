@@ -75,6 +75,7 @@ namespace Medpolis
                                         var user = ((from c in context.Client where c.Email.Equals(email_box.Text) select c).Take(1)).ToList();
                                         if (user.Count() == 0)
                                         {
+                                            var passwd_encryption = new PasswordEncryption();
                                             var newUser = new Client()
                                             {
                                                 Nume = surname_box.Text,
@@ -82,7 +83,7 @@ namespace Medpolis
                                                 CNP = cnp_box.Text,
                                                 Telefon = phone_box.Text,
                                                 Email = email_box.Text,
-                                                Parola = password_box.Password
+                                                Parola = passwd_encryption.Encrypt(password_box.Password)
                                             };
                                             context.Client.Add(newUser);
                                             context.SaveChanges();

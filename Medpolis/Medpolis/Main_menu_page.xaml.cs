@@ -23,7 +23,6 @@ namespace Medpolis
         private CollectionViewSource pretSpecialitateDatagrid;
         private CollectionViewSource clientDetails;
         private CollectionViewSource doctorSpecialitateDatagrid;
-        private readonly List<string> tip_program = new List<string>() { "8:00 - 14:00", "14:00 - 20:00" };
 
         internal class Programare_Detalii
         {
@@ -113,6 +112,12 @@ namespace Medpolis
                     select_data.BlackoutDates.Add(new CalendarDateRange(date, date.AddDays(1)));
         }
 
+        private DateTime getFullData(DateTime date, string hourString)
+        {
+            var full_hour = hourString.Split(':');
+            return date.AddHours(int.Parse(full_hour[0])).AddMinutes(int.Parse(full_hour[1]));
+        }
+
         private Client get_user_account(Clinica_MedpolisEntities context)
         {
             return (from c in context.Client where c.Email.Equals(email_label.Content.ToString().Trim()) select c).Take(1).ToList()[0];
@@ -138,12 +143,6 @@ namespace Medpolis
             programari_table.ItemsSource = programari;
         }
 
-        private DateTime getFullData(DateTime date, string hourString)
-        {
-            var full_hour = hourString.Split(':');
-            return date.AddHours(int.Parse(full_hour[0])).AddMinutes(int.Parse(full_hour[1]));
-        }
-
         public Main_menu_page()
         {
             InitializeComponent();
@@ -159,53 +158,6 @@ namespace Medpolis
                 context.SaveChanges();
             }
             DataContext = this;
-        }
-
-        private void preturi_tab_menu_Loaded(object sender, RoutedEventArgs e)
-        {
-            medpolis_context.Specialitate.Load();
-            specComboBox.Source = medpolis_context.Specialitate.Local;
-            serviciuDataGrid.SelectedIndex = -1;
-        }
-
-        private void specialitateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            serviciuDataGrid.SelectedIndex = -1;
-        }
-
-        private void cont_tab_Loaded(object sender, RoutedEventArgs e)
-        {
-            programari_table.SelectedIndex = -1;
-            using (var context = new Clinica_MedpolisEntities())
-            {
-                var user = get_user_account(context);
-                medpolis_context.Client.Load();
-                clientDetails.Source = new List<Client> { user };
-                profile_label.Content += (user.Prenume + " " + user.Nume);
-                get_programari_table(context, user);
-            }
-        }
-
-        private void leave_account_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show("Doriți să părăsiți contul dumneavoastră?", "Părăsire cont", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
-            if (result == MessageBoxResult.OK)
-                NavigationService.Navigate(new Login_page());
-        }
-
-        private void DeleteProgramareCommandHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            var programare = e.Parameter as Programare_Detalii;
-            using (var context = new Clinica_MedpolisEntities())
-            {
-                var prog = (from p in context.Programare
-                            where p.ID == programare.ID
-                            select p).FirstOrDefault();
-                context.Programare.Remove(prog);
-                context.SaveChanges();
-                var user = get_user_account(context);
-                get_programari_table(context, user);
-            }
         }
 
         private void specialitati_tab_Loaded(object sender, RoutedEventArgs e)
@@ -228,6 +180,7 @@ namespace Medpolis
 
         private void doctoriDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var tip_program = new List<string>() { "8:00 - 14:00", "14:00 - 20:00" };
             var doctor_selectat = (Doctor)doctoriDataGrid.SelectedItem;
             if (doctor_selectat != null)
             {
@@ -237,6 +190,18 @@ namespace Medpolis
             }
         }
 
+        private void preturi_tab_menu_Loaded(object sender, RoutedEventArgs e)
+        {
+            medpolis_context.Specialitate.Load();
+            specComboBox.Source = medpolis_context.Specialitate.Local;
+            serviciuDataGrid.SelectedIndex = -1;
+        }
+
+        private void specialitateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            serviciuDataGrid.SelectedIndex = -1;
+        }
+        
         private void programari_tab_Loaded(object sender, RoutedEventArgs e)
         {
             pret_programare_label.Content = "";
@@ -437,6 +402,61 @@ namespace Medpolis
                 else MessageBox.Show("Selectați un doctor!", "Formular invalid pentru programare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
             else MessageBox.Show("Selectați o specialitate!", "Formular invalid pentru programare", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+        }
+
+        private void cont_tab_Loaded(object sender, RoutedEventArgs e)
+        {
+            programari_table.SelectedIndex = -1;
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                var user = get_user_account(context);
+                medpolis_context.Client.Load();
+                clientDetails.Source = new List<Client> { user };
+                profile_label.Content += (user.Prenume + " " + user.Nume);
+                get_programari_table(context, user);
+            }
+        }
+
+        private void leave_account_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Doriți să părăsiți contul dumneavoastră?", "Părăsire cont", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
+            if (result == MessageBoxResult.OK)
+                NavigationService.Navigate(new Login_page());
+        }
+
+        private void DeleteProgramareCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            var programare = e.Parameter as Programare_Detalii;
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                var prog = (from p in context.Programare
+                            where p.ID == programare.ID
+                            select p).FirstOrDefault();
+                context.Programare.Remove(prog);
+                context.SaveChanges();
+                var user = get_user_account(context);
+                get_programari_table(context, user);
+            }
+        }
+
+        private void crystal_report_viewer_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                var crystal_reports_page = new Crystal_reports_page();
+                crystal_reports_page.get_user(get_user_account(context));
+                NavigationService.Navigate(crystal_reports_page);
+            }
+        }
+
+        private void report_viewer_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new Clinica_MedpolisEntities())
+            {
+                var reportViewer_Page = new ReportViewer_page();
+                reportViewer_Page.get_user(get_user_account(context));
+                NavigationService.Navigate(reportViewer_Page);
+            }
         }
     }
 }
