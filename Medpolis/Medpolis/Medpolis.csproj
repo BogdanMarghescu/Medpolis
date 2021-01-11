@@ -138,6 +138,9 @@
     <Compile Include="Login_page.xaml.cs">
       <DependentUpon>Login_page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main_menu_doctor_page.xaml.cs">
+      <DependentUpon>Main_menu_doctor_page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Medpolis_model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +179,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Main_menu_doctor_page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main_menu_page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

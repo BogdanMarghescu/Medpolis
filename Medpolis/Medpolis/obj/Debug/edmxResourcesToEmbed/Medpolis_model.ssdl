@@ -32,6 +32,7 @@
     <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Telefon" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Tura" Type="smallint" Nullable="false" />
+    <Property Name="Parola" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="Programare">
     <Key>

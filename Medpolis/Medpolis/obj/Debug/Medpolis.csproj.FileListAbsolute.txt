@@ -58,3 +58,5 @@ D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpoli
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\RdlCompile.compiled
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\bin\Debug\SshNet.Security.Cryptography.dll
 D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\bin\Debug\SshNet.Security.Cryptography.xml
+D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\Main_menu_doctor_page.g.cs
+D:\FACULTATE - TEME, LUCRARI SI CURSURI\AN 3\Sem 1\Aplicatii BD\Medpolis\Medpolis\obj\Debug\Main_menu_doctor_page.baml

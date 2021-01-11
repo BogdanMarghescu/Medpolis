@@ -27,6 +27,7 @@
     <EntitySetMapping Name="Doctor">
       <EntityTypeMapping TypeName="Clinica_MedpolisModel.Doctor">
         <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="Parola" ColumnName="Parola" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Nume" ColumnName="Nume" />
           <ScalarProperty Name="Prenume" ColumnName="Prenume" />

@@ -68,5 +68,18 @@
         </PasswordBox>
         <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="608,430,0,0" Height="40" Width="140" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
         <Label Content="Parolă:" HorizontalAlignment="Left" Margin="608,500,0,0" VerticalAlignment="Top" Width="140" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontFamily="Gill Sans MT" FontSize="26" Foreground="#FF7F0000"/>
+        <Button x:Name="login_doctor" Content="Autentificare ca doctor" Margin="760,816,760,0" VerticalAlignment="Top" Width="400" Height="60" Cursor="Hand" BorderBrush="#FFFF7171" FontFamily="Gill Sans MT" FontSize="36" AutomationProperties.Name="login_doctor" HorizontalAlignment="Center" Foreground="#FF7F0000" Click="login_doctor_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF0B3B3" Offset="1"/>
+                    <GradientStop Color="#FFEA2F2F"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>

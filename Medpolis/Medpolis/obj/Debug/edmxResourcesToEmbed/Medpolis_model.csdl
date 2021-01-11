@@ -37,6 +37,7 @@
     <NavigationProperty Name="Concediu" Relationship="Self.FK_Concediu_Doctor" FromRole="Doctor" ToRole="Concediu" />
     <NavigationProperty Name="Specialitate" Relationship="Self.FK_Doctor_Specialitate" FromRole="Doctor" ToRole="Specialitate" />
     <NavigationProperty Name="Programare" Relationship="Self.FK_Programare_Doctor" FromRole="Doctor" ToRole="Programare" />
+    <Property Name="Parola" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Programare">
     <Key>

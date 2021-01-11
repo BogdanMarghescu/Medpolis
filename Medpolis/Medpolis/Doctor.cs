@@ -28,6 +28,7 @@ namespace Medpolis
         public string Email { get; set; }
         public string Telefon { get; set; }
         public short Tura { get; set; }
+        public string Parola { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<Concediu> Concediu { get; set; }

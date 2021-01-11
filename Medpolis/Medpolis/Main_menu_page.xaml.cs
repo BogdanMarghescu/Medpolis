@@ -104,6 +104,7 @@ namespace Medpolis
         {
             var start_date = DateTime.Today.AddDays(1);
             var end_date = start_date.AddMonths(2);
+            select_data.SelectedDate = null;
             select_data.DisplayDate = start_date;
             select_data.DisplayDateStart = start_date;
             select_data.DisplayDateEnd = end_date;
