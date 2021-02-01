@@ -202,7 +202,7 @@ namespace Medpolis
         {
             serviciuDataGrid.SelectedIndex = -1;
         }
-        
+
         private void programari_tab_Loaded(object sender, RoutedEventArgs e)
         {
             pret_programare_label.Content = "";
@@ -312,7 +312,7 @@ namespace Medpolis
                                                                  select c).Take(1).ToList();
                         if (programari_doctor_ziua_selectata.Count() == 0 &&
                             programari_client_ziua_selectata.Count() == 0 &&
-                            programari_acelasi_doctor_ziua_selectata.Count() == 0 && 
+                            programari_acelasi_doctor_ziua_selectata.Count() == 0 &&
                             doctor_in_concediu_ziua_selectata.Count() == 0)
                         {
                             oraComboBox.Items.Add(ora_programare);
